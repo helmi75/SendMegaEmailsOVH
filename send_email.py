@@ -43,39 +43,42 @@ def send_email(sender_email, sender_password, recipient_email, subject, message)
         # Retourne un message d'erreur en cas d'échec
         return f"L'envoi de l'e-mail à {recipient_email} a échoué. Erreur : {str(e)}"
 
+def main():
+    # Interface utilisateur avec Streamlit
+    st.title("Envoi d'e-mails avec OVH")
 
-# Interface utilisateur avec Streamlit
-st.title("Envoi d'e-mails avec OVH")
+    # Entrées de l'utilisateur
+    sender_email = "contact@kingvpn.fr"
+    sender_password = "Bizerte7000"
+    file  = st.file_uploader("ficher_excel")
+    serie_email_file = pd.read_excel(file)
+    chunked_email_array = chunk_fonction(serie_email_file[0])
+    moy_email =len(chunked_email_array[0])
+    nbr_groupe = len(chunked_email_array)
+    st.write(f" ### il y a {nbr_groupe} groupe de {moy_email} emails,  ce qui fait au total  {nbr_groupe * moy_email} emails")
+    st.write(f"### la duré d'envoi d email est de  : {nbr_groupe/24} jours ") 
 
-# Entrées de l'utilisateur
-sender_email = "contact@kingvpn.fr"
-sender_password = "Bizerte7000"
-file  = st.file_uploader("ficher_excel")
-serie_email_file = pd.read_excel(file)
-chunked_email_array = chunk_fonction(serie_email_file[0])
-moy_email =len(chunked_email_array[0])
-nbr_groupe = len(chunked_email_array)
-st.write(f" ### il y a {nbr_groupe} groupe de {moy_email} emails,  ce qui fait au total  {nbr_groupe * moy_email} emails")
-st.write(f"### la duré d'envoi d email est de  : {nbr_groupe/24} jours ") 
+    if st.button("test envoi"):
+        for list_email in chunked_email_array[:2] :
+            for i , email in enumerate(list_email):
+                recipient_emails_list = ["helmichiha@gmail.com","helmichiha@hotmail.com"]
+                subject = f"Sujet de l'e-mail num {i}"
+                with open('mail.html', 'r') as f:
+                    message = f.read()
+                st.write(f' email envoyer à {email}') 
+                st.write(f'sujet {subject}') 
+                name="helmi"
+                if not name :
+                    name=" "
+                st.markdown(message.format(mail= email, name =name ), unsafe_allow_html=True)
+            # Bouton pour envoyer les e-mails
+            #if st.button("Envoyer"):
+            # Envoi des e-mails à chaque destinataire
+                subject ="wewewe"
+                recipient_emails_list = ["helmichiha@gmail.com","helmichiha@hotmail.com"]
+                for recipient_email in  recipient_emails_list:
+                    st.write(send_email(sender_email, sender_password, recipient_email, subject, message))
+                st.write("envoyé")
 
-if st.button("test envoi"):
-  for list_email in chunked_email_array[:2] :
-    for i , email in enumerate(list_email):
-       recipient_emails_list = ["helmichiha@gmail.com","helmichiha@hotmail.com"]
-       subject = f"Sujet de l'e-mail num {i}"
-       with open('mail.html', 'r') as f:
-           message = f.read()
-       st.write(f' email envoyer à {email}') 
-       st.write(f'sujet {subject}') 
-       name="helmi"
-       if not name :
-          name=" "
-       st.markdown(message.format(mail= email, name =name ), unsafe_allow_html=True)
-# Bouton pour envoyer les e-mails
-#if st.button("Envoyer"):
-  # Envoi des e-mails à chaque destinataire
-       subject ="wewewe"
-       recipient_emails_list = ["helmichiha@gmail.com","helmichiha@hotmail.com"]
-       for recipient_email in  recipient_emails_list:
-          st.write(send_email(sender_email, sender_password, recipient_email, subject, message))
-       st.write("envoyé")
+if __name__ == "__main__":
+    main()
