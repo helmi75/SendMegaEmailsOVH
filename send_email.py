@@ -2,7 +2,9 @@ import pandas as pd
 import streamlit as st
 from pandas import Series
 import numpy as np
-
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 def chunk_fonction(emails: Series) -> np.ndarray:
     """
@@ -13,14 +15,41 @@ def chunk_fonction(emails: Series) -> np.ndarray:
     chunks = np.array_split(emails, num_chunks)
     return chunks
 
+def send_email(sender_email, sender_password, recipient_email, subject, message):
+    try:
+        # Paramètres du serveur SMTP d'OVH
+        smtp_server = 'ssl0.ovh.net'
+        smtp_port = 587
+        
+        # Création du message
+        msg = MIMEMultipart()
+        msg['From'] = sender_email
+        msg['To'] = recipient_email
+        msg['Subject'] = subject
+        msg.attach(MIMEText(message, 'plain'))
+        
+        # Connexion au serveur SMTP
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()
+        server.login(sender_email, sender_password)
+        
+        # Envoi du message
+        server.sendmail(sender_email, recipient_email, msg.as_string())
+        server.quit()
+        
+        # Retourne un message de confirmation
+        return f"L'e-mail a été envoyé à {recipient_email} avec succès."
+    except Exception as e:
+        # Retourne un message d'erreur en cas d'échec
+        return f"L'envoi de l'e-mail à {recipient_email} a échoué. Erreur : {str(e)}"
 
 
 # Interface utilisateur avec Streamlit
 st.title("Envoi d'e-mails avec OVH")
 
 # Entrées de l'utilisateur
-sender_email = st.text_input("Adresse e-mail de l'expéditeur")
-sender_password = st.text_input("Mot de passe de l'expéditeur", type='password')
+sender_email = "contact@kingvpn.fr"
+sender_password = "Bizerte7000"
 file  = st.file_uploader("ficher_excel")
 serie_email_file = pd.read_excel(file)
 chunked_email_array = chunk_fonction(serie_email_file[0])
@@ -32,19 +61,21 @@ st.write(f"### la duré d'envoi d email est de  : {nbr_groupe/24} jours ")
 if st.button("test envoi"):
   for list_email in chunked_email_array[:2] :
     for i , email in enumerate(list_email):
-       #recipient_emails = st.text_input("Adresses e-mail des destinataires (séparées par des virgules)")
+       recipient_emails_list = ["helmichiha@gmail.com","helmichiha@hotmail.com"]
        subject = f"Sujet de l'e-mail num {i}"
        with open('mail.html', 'r') as f:
            message = f.read()
        st.write(f' email envoyer à {email}') 
        st.write(f'sujet {subject}') 
-       st.markdown(message.format(mail= email), unsafe_allow_html=True)
+       name="helmi"
+       if not name :
+          name=" "
+       st.markdown(message.format(mail= email, name =name ), unsafe_allow_html=True)
 # Bouton pour envoyer les e-mails
-if st.button("Envoyer"):
-    # Séparation des adresses e-mail en une liste
-    recipient_emails_list = recipient_emails.split(",")
-    
-    # Envoi des e-mails à chaque destinataire
-    for recipient_email in recipient_emails_list:
-        st.write(send_email(sender_email, sender_password, recipient_email.strip(), subject, message))
-
+#if st.button("Envoyer"):
+  # Envoi des e-mails à chaque destinataire
+       subject ="wewewe"
+       recipient_emails_list = ["helmichiha@gmail.com","helmichiha@hotmail.com"]
+       for recipient_email in  recipient_emails_list:
+          st.write(send_email(sender_email, sender_password, recipient_email, subject, message))
+       st.write("envoyé")
