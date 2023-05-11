@@ -1,6 +1,7 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
 
 
 class EmailSender:
@@ -19,7 +20,11 @@ class EmailSender:
             msg['From'] = self.sender_email
             msg['To'] = recipient_email
             msg['Subject'] = subject
-            msg.attach(MIMEText(message, 'plain'))
+
+            # Attach HTML message
+            msg.attach(MIMEText(message, 'html'))
+
+        
 
             # Connect to SMTP server
             server = smtplib.SMTP(smtp_server, smtp_port)

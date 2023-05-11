@@ -1,0 +1,7 @@
+.env/
+King_VPN_template1.html
+King_VPN_template2.html
+mail.html
+test_email.py
+send_email.py
+__pycache__/
