@@ -17,6 +17,8 @@ def run_email_app(app_type):
         run_single_send(email_sender, path)
     elif app_type == "Manage Client":
         run_manage_client(bdd)
+    elif app_type == "Manage Template":
+        run_manage_template(bdd)
 
 def run_group_send(email_sender, path):
     st.write("### Group send")
@@ -118,5 +120,14 @@ def run_manage_client(bdd):
                                                                     "user_name",
                                                                     "password",
                                                                     "recovery_token"]
-                                                                    ))       
+                                                                    ))    
+            
+def run_manage_template(bdd) :
+    st.write("### Manage tempalte")
+    # add a single template
+    # add a multiple template
+    # liste a template  
+
+
+    
     
