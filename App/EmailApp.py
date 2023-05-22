@@ -3,6 +3,7 @@ import streamlit as st
 from pandas import Series
 from EmailChunker import EmailChunker
 from EmailSender import EmailSender
+from crm_database import CRMDatabase
 
 
 def main():
@@ -18,6 +19,7 @@ def main():
     sender_password = "Bizerte7000"
     path='/home/anisse9/vpn/'
     email_sender = EmailSender(sender_email, sender_password)
+    bdd = CRMDatabase()
     
     if add_selectbox == "Group send":   
         file = st.file_uploader("Excel file")  # upload an excel file containing email addresses
@@ -67,38 +69,55 @@ def main():
 
         # create client 
         st.write("### Create client")
-        with st.form("create Form"):
-            create_input = st.text_input("Enter the username or email to create")
-            create_button = st.form_submit_button("Create")
-        
+        with st.expander("Create client"):
+            with st.form("create Form"):
+                email = st.text_input("Enter email")
+                user_name = st.text_input("Username")
+                password = st.text_input("password")
+                recovery_token = st.text_input("recovery_token")
+                create_button = st.form_submit_button("Create")
+            
+                
         if create_button:
-            if create_input != "":
-                st.write("Username created:", create_input)
+            # !! ajouter un test de d'insertion
+                bdd.create_client(email, user_name, password, recovery_token)
+                st.write("Username created:", user_name)
+
 
         # deleate client 
         st.write("### Delete client")
-        with st.form("Delete Form"):
-            delete_input = st.text_input("Enter the username or email to delete")
-            delete_button = st.form_submit_button("Delete")
+        with st.expander("Delete client"):
+            with st.form("Delete Form"):
+                delete_input_id = st.text_input("Enter id client")
+                
+
+                delete_button = st.form_submit_button("Delete")
         
         if delete_button:
-            if delete_input != "":
-                st.write("Username deleted:", delete_input)
+            if delete_input_id != "":
+                bdd.delete_client(int(delete_input_id) )
+                st.write("Username deleted:", delete_input_id)
 
 
        
-
+        # Search client 
         st.write("### Search client")
-        with st.form("Search Form"):
-            search_input = st.text_input("Enter the username or email to search")
-            search_button = st.form_submit_button("Search")
-            
-        if search_button:
-            if search_input != "":
-                st.write("Username deleted:", search_input)
+        with st.expander("Search client"):
+            with st.form("Search Form"):
+                search_input = st.text_input("Enter the username or email to search")
+                search_button = st.form_submit_button("Search")
+                
+            if search_button:
+                if search_input != "":
+                    st.write("Username deleted:", search_input)
 
-
-        
+            if st.button("tous les client"):
+                st.write(pd.DataFrame(bdd.get_all_clients(), columns=["id_client",
+                                                                        "email",
+                                                                        "user_name",
+                                                                        "password",
+                                                                        "recovery_token"]
+                                                                        ))       
     
 
 if __name__ == "__main__":

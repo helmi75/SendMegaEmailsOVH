@@ -22,9 +22,7 @@ class EmailSender:
             msg['Subject'] = subject
 
             # Attach HTML message
-            msg.attach(MIMEText(message, 'html'))
-
-        
+            msg.attach(MIMEText(message, 'html'))       
 
             # Connect to SMTP server
             server = smtplib.SMTP(smtp_server, smtp_port)
