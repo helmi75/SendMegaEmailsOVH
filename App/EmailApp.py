@@ -12,7 +12,7 @@ def main():
     st.title("Sending emails with OVH") 
     add_selectbox = st.sidebar.selectbox(
     "choise your gols",
-    ("Group send", "Single send",'Client BDD')) 
+    ("Group send", "Single send","Manage Client") )
 
     # User inputs
     sender_email = "contact@kingvpn.fr"
@@ -65,7 +65,7 @@ def main():
             email_sender.send_email(email, "testh_helmi_html", html_string)
             st.write("envoyé")
 
-    elif add_selectbox == "Client BDD" :
+    elif add_selectbox == "Manage Client" :
 
         # create client 
         st.write("### Create client")
