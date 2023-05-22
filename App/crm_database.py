@@ -23,18 +23,24 @@ class CRMDatabase:
         self.cursor.execute("DELETE FROM message WHERE id_message = ?", (id_message,))
         self.conn.commit()
 
-    def create_template(self, template_name, template_content):
-        self.cursor.execute("INSERT INTO template (template_name, template_content) VALUES (?, ?)",
-                            (template_name, template_content))
+    def create_template(self, template_name, template_content, type_template):
+        self.cursor.execute("INSERT INTO template (template_name, template_content, type_template) VALUES (?, ?, ?)",
+                            (template_name, template_content, type_template))
         self.conn.commit()
 
     def delete_template(self, id_template):
         self.cursor.execute("DELETE FROM template WHERE id_template = ?", (id_template,))
         self.conn.commit()
+    
+    
 
     def close(self):
         self.conn.close()
         
     def get_all_clients(self):
         self.cursor.execute("SELECT * FROM client")
+        return self.cursor.fetchall()
+    
+    def get_all_template_one_to_one(self):
+        self.cursor.execute("SELECT template_name, template_content, type_template FROM template where type_template='one-to-one'")
         return self.cursor.fetchall()

@@ -24,7 +24,7 @@ conn.execute('''CREATE TABLE IF NOT EXISTS template
                  (id_template INTEGER PRIMARY KEY,
                  template_name TEXT UNIQUE,
                  template_content TEXT,
-                 type_template TEXT CHECK(type_template IN ('one-to-all', 'one-to-one')))''')
+                 type_template TEXT NOT NULL CHECK(type_template IN ('one-to-all', 'one-to-one')))''')
 
 
 # Fermeture de la connexion à la base de données
