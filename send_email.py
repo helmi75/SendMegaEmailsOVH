@@ -5,6 +5,8 @@ import numpy as np
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.utils import formatdate
+
 
 def chunk_fonction(emails: Series) -> np.ndarray:
     """
@@ -26,6 +28,7 @@ def send_email(sender_email, sender_password, recipient_email, subject, message)
         msg['From'] = sender_email
         msg['To'] = recipient_email
         msg['Subject'] = subject
+        msg['Date'] = formatdate(localtime=True)
         msg.attach(MIMEText(message, 'plain'))
         
         # Connexion au serveur SMTP
@@ -70,14 +73,29 @@ def main():
                 name="helmi"
                 if not name :
                     name=" "
-                st.markdown(message.format(mail= email, name =name ), unsafe_allow_html=True)
+                st.markdown(message.format(mail=email, name=name ), unsafe_allow_html=True)
             # Bouton pour envoyer les e-mails
             #if st.button("Envoyer"):
             # Envoi des e-mails à chaque destinataire
                 subject ="wewewe"
                 recipient_emails_list = ["helmichiha@gmail.com","helmichiha@hotmail.com"]
                 for recipient_email in  recipient_emails_list:
-                    st.write(send_email(sender_email, sender_password, recipient_email, subject, message))
+                    st.write(send_email(sender_email, 
+                                        sender_password, 
+                                        recipient_email,
+                                        subject,
+                                        f"""<!DOCTYPE html>
+							<html>
+                                                            <head>
+                                                                <title> Kingvpn </title>
+                                                            </head>
+                                                            <body>
+                                                               {message}
+                                                            </body>
+                                                        </html>
+                                           """
+                                        )
+                             )
                 st.write("envoyé")
 
 if __name__ == "__main__":
