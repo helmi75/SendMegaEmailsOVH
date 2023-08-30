@@ -5,8 +5,8 @@ from email.mime.text import MIMEText
 # Paramètres SMTP d'Amazon SES
 smtp_server = 'email-smtp.us-east-1.amazonaws.com'
 smtp_port = 587
-smtp_username = 'AKIAYQFIMXQIAGORJ7GO'
-smtp_password = 'BP41rOuaKAJg0x0vmHAZpeiOu/2fidB1NH3hw+lCoeOW'
+
+
 
 # Créer un objet MIMEMultipart pour l'e-mail
 message = MIMEMultipart()
