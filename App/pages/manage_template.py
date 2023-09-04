@@ -14,21 +14,32 @@ def run_manage_template(template) :
                 template.close()
                 st.success("Le template a été inséré dans la base de données avec succès.")
 
-    with tab2 :
-        st.write("### Manage tempalte")
-        if st.button("show tempalte"):  
-            df_template = pd.DataFrame(template.get_all_template(), columns=["id_template", "name_template","type_template"])      
+    
+
+    with tab2:
+        st.write("### Manage template")
+        if st.button("Show template"):
+            df_template = pd.DataFrame(template.get_all_template(), columns=["id_template", "name_template", "type_template"])
             st.write(df_template)
-        if st.button("delate template "):
-            with st.expander("Delete template"):
-                with st.form("delete template"):
-                    id_template = st.number_input("Enter id_template")                    
-                    delete_button = st.form_submit_button("delete")
-                    
-            if delete_button:
-                template.delete_template(int(id_template))
-                template.close()
-                st.success("Username deleated :", df_template["id_template"]==id_template)
+        
+       
+
+
+        with st.expander("Delete Template"):
+            with st.form("Delete Template"):
+                id_temp = st.text_input("Enter id_template")
+                search_button = st.form_submit_button("Delete")
+                
+            if search_button:
+                template.delete_template(id_temp)
+                st.success("supimé")
+                
+
+        
+
+        
+        
+
 
 
 

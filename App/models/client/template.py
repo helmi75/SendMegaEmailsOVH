@@ -10,8 +10,10 @@ class CreateTemplate(CRMDatabase):
                             (template_name, template_content, type_template))
         self.conn.commit()
 
+
+
     def delete_template(self, id_template):
-        self.cursor.execute("DELETE FROM template WHERE id_template =  VALUES (?)", (id_template))
+        self.cursor.execute("DELETE FROM template WHERE id_template = ?", (id_template,))
         self.conn.commit()
 
     def get_all_template_one_to_one(self):
@@ -23,5 +25,5 @@ class CreateTemplate(CRMDatabase):
         return self.cursor.fetchall()
     
     def get_all_template(self):
-        self.cursor.execute("SELECT id_template,template_name,type_template  FROM template")
+        self.cursor.execute("SELECT id_template, template_name, type_template  FROM template")
         return self.cursor.fetchall()
