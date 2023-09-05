@@ -8,4 +8,5 @@ __pycache__/
 App/crm.db
 test/test_email_AWS.py
 test/test_email_AWS_V2.py
-
+nohup.out
+crm.db
