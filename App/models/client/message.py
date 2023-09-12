@@ -5,9 +5,9 @@ from .crm_database import CRMDatabase
 
 class CreateMessage(CRMDatabase):
 
-    def create_message(self, id_client, message_sended, date):
-        self.cursor.execute("INSERT INTO message (id_client, message_sended, date) VALUES (?, ?, ?)",
-                            (id_client, message_sended, date))
+    def create_message(self, id_client, message_sended, date, message_status):
+        self.cursor.execute("INSERT INTO message (id_client, message_sended, date, message_status) VALUES (?, ?, ?, ?)",
+                            (id_client, message_sended, date, message_status))
         self.conn.commit()
 
     def delete_message(self, id_message):
