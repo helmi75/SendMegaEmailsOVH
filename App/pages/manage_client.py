@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd 
+
 # Page Manage Client
-def run_manage_client( client):
+def run_manage_client(client):
     tab1, tab2, tab3 = st.tabs(["Manage clients","Client data", "Add clients from excel to the BDD"])
     with tab1:
         st.write("### Create Client")
@@ -68,3 +69,6 @@ def run_manage_client( client):
                 st.write("autres fichiers")           
             
         #client = Client(email, username, password, recovery_token=None)
+
+if __name__ == "__main__":
+    run_manage_client("Manage Client")
