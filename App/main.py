@@ -7,6 +7,9 @@ from pages.group_send import run_group_send
 from pages.single_send import run_single_send
 from pages.manage_client import run_manage_client
 from pages.manage_template import run_manage_template
+from pages.manage_message import run_manage_message
+
+
 
 
 
@@ -29,14 +32,17 @@ def run_email_app(app_type):
         run_manage_client( client)
     elif app_type == "Manage Template":
         run_manage_template( template)
-
+    elif app_type == "Manage Messaage":
+        run_manage_message( message)
+    
+  
 
 
 def main():
     st.title("Sending emails with OVH") 
     add_selectbox = st.sidebar.selectbox(
         "Choose your goal",
-        ("Group send", "Single send", "Manage Client","Manage Template")
+        ("Group send", "Single send", "Manage Client","Manage Template", "Manage Messaage")
     )
 
     if add_selectbox == "Group send":
@@ -47,6 +53,8 @@ def main():
         run_email_app("Manage Client")
     elif add_selectbox == "Manage Template":
         run_email_app("Manage Template")
+    elif add_selectbox == "Manage Message":
+        run_email_app("Manage Messaage")
 
 if __name__ == "__main__":
     main()
