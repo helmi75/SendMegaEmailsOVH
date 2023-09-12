@@ -4,6 +4,7 @@ import numpy as np
 from pandas import Series
 
 
+
 class EmailChunker:
     def __init__(self, chunk_size):
         self.chunk_size = chunk_size
@@ -93,3 +94,5 @@ def run_group_send(email_sender, client, template):
         st.write('####  1) envoyé a tout le monde')
         st.write('####  2) envoyer au restes contact pas encore envoyé')
 
+if __name__ == "__main__":
+     run_group_send("Group send")
