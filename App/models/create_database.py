@@ -12,12 +12,15 @@ conn.execute('''CREATE TABLE IF NOT EXISTS client
                  recovery_token TEXT )''')
 
 # Création de la table "message"
-conn.execute('''CREATE TABLE IF NOT EXISTS message
-                 (id_message INTEGER PRIMARY KEY,
-                 id_client INTEGER,
-                 message_sended TEXT,
-                 date TEXT,
-                 FOREIGN KEY(id_client) REFERENCES client(id_client))''')
+conn.execute('''CREATE TABLE IF NOT EXISTS message (
+             id_message INTEGER PRIMARY KEY,
+             id_client INTEGER,
+             message_sended TEXT,
+             message_status TEXT, 
+             date DATETIME,
+             FOREIGN KEY(id_client) REFERENCES client(id_client))''')
+
+
 
 # Création de la table "template"
 conn.execute('''CREATE TABLE IF NOT EXISTS template
