@@ -25,14 +25,14 @@ def run_email_app(app_type):
     template = CreateTemplate()
 
     if app_type == "Group send":
-        run_group_send(email_sender, client, template)
+        run_group_send(email_sender, client, template, message)
     elif app_type == "Single send":
         run_single_send(email_sender, template)
     elif app_type == "Manage Client":
         run_manage_client( client)
     elif app_type == "Manage Template":
         run_manage_template( template)
-    elif app_type == "Manage Messaage":
+    elif app_type == "Manage Message":
         run_manage_message( message)
     
   
@@ -42,7 +42,7 @@ def main():
     st.title("Sending emails with OVH") 
     add_selectbox = st.sidebar.selectbox(
         "Choose your goal",
-        ("Group send", "Single send", "Manage Client","Manage Template", "Manage Messaage")
+        ("Group send", "Single send", "Manage Client","Manage Template", "Manage Message")
     )
 
     if add_selectbox == "Group send":
@@ -54,7 +54,7 @@ def main():
     elif add_selectbox == "Manage Template":
         run_email_app("Manage Template")
     elif add_selectbox == "Manage Message":
-        run_email_app("Manage Messaage")
+        run_email_app("Manage Message")
 
 if __name__ == "__main__":
     main()
