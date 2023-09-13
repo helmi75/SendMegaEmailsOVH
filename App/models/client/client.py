@@ -18,5 +18,9 @@ class CreateClient(CRMDatabase):
         self.cursor.execute("SELECT * FROM client")
         return self.cursor.fetchall()
     
+    def get_id_client(self, email):
+        self.cursor.execute("SELECT id_client FROM client WHERE email = ?", (email,)) 
+        return self.cursor.fetchall()
+    
     def close(self):
         self.conn.close()
