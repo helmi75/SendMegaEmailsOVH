@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd 
 import numpy as np
 from pandas import Series
-
+from datetime import datetime
 
 
 class EmailChunker:
@@ -17,7 +17,7 @@ class EmailChunker:
         chunks = np.array_split(emails, num_chunks)  # split the Series into chunks
         return chunks
 
-def run_group_send(email_sender, client, template):
+def run_group_send(email_sender, client, template, message):
     st.write("### Group send")
     tab1, tab2 = st.tabs(["From excel file", "From database"])
     with tab1:
@@ -45,10 +45,11 @@ def run_group_send(email_sender, client, template):
                             email_sender.send_email(email , "testh_helmi_html", f"<!DOCTYPE html><html><body>{html_string}</body></html>")
                             try:
                                  print(" connect to a database and send a log message sended")
-                                 
+                                 message.create_message(client.get_id_client(email)[0][0], f"<!DOCTYPE html><html><body>{html_string}</body></html>", datetime.now(), " Message sended ")
 
-                            except  :
-                                print("if erro raise a error ")
+                            except Exception as error:
+                                print(f"if erro raise a error{error}")
+                                message.create_message(client.get_id_client(email)[0][0], f"<!DOCTYPE html><html><body>{html_string}</body></html>", datetime.now(), f" Error: {error} ")
                     st.write("envoyé")
             else:
                 pass
