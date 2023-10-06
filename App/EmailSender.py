@@ -34,7 +34,7 @@ class EmailSender:
             server.quit()
 
             # Return confirmation message
-            return f"Email sent successfully to {recipient_email}."
+            return True
         except Exception as e:
             # Return error message in case of failure
-            return f"Failed to send email to {recipient_email}. Error: {str(e)}"
+            return e
