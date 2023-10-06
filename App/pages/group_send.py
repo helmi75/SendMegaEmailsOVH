@@ -41,16 +41,30 @@ def run_group_send(email_sender, client, template, message):
                 st.markdown(html_string, unsafe_allow_html=True)
             if st.button("Send test email", key=4):
                 for list_email in chunked_email_array:
-                    for i, email in enumerate(list_email):          
-                            email_sender.send_email(email , "testh_helmi_html", f"<!DOCTYPE html><html><body>{html_string}</body></html>")
-                            try:
-                                 print(" connect to a database and send a log message sended")
-                                 message.create_message(client.get_id_client(email)[0][0], f"<!DOCTYPE html><html><body>{html_string}</body></html>", datetime.now(), " Message sended ")
+                    for i, email in enumerate(list_email):                                
+                            try:                                
+                                client_email= client.get_id_client(email)[0][0]
+                                content_to_send = f"<!DOCTYPE html><html><body>{html_string}</body></html>"
 
-                            except Exception as error:
-                                print(f"if erro raise a error{error}")
-                                message.create_message(client.get_id_client(email)[0][0], f"<!DOCTYPE html><html><body>{html_string}</body></html>", datetime.now(), f" Error: {error} ")
-                    st.write("envoyé")
+                                # try to send email ton client 
+                                email_status = email_sender.send_email(email , "testh_helmi_html", content_to_send)
+                                print(email_status)
+
+                                if email_status == True:
+                                    message.create_message( client_email,
+                                                         content_to_send, 
+                                                         datetime.now(), 
+                                                         f"Email sent successfully to {client_email}.")
+                                    st.write("envoyé")
+                                else :
+                                    message.create_message( client_email, 
+                                                       content_to_send,
+                                                       datetime.now(), 
+                                                       f"Failed to send email to {client_email}. Error: {str(email_status)}")
+                                    st.write("pas envoyé ")
+                            except Exception as e:
+                                st.write( f"il y'a problème d'envoie errur : {e}")
+                    
             else:
                 pass
 
