@@ -11,8 +11,6 @@ from pages.manage_message import run_manage_message
 
 
 
-
-
 def run_email_app(app_type):
     sender_email = "contact@kingvpn.fr"
     sender_password = "Bizerte7000"
@@ -33,7 +31,7 @@ def run_email_app(app_type):
     elif app_type == "Manage Template":
         run_manage_template( template)
     elif app_type == "Manage Message":
-        run_manage_message( message)
+        run_manage_message( email_sender, message, client)
     
   
 
