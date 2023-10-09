@@ -44,6 +44,8 @@ def run_group_send(email_sender, client, template, message):
                     for i, email in enumerate(list_email):                                
                             try:                                
                                 client_email= client.get_id_client(email)[0][0]
+                                
+
                                 content_to_send = f"<!DOCTYPE html><html><body>{html_string}</body></html>"
 
                                 # try to send email ton client 
@@ -54,17 +56,21 @@ def run_group_send(email_sender, client, template, message):
                                     message.create_message( client_email,
                                                          content_to_send, 
                                                          datetime.now(), 
-                                                         f"Email sent successfully to {client_email}.")
+                                                         f"Email sent successfully to {email}.")
                                     st.write("envoyé")
                                 else :
                                     message.create_message( client_email, 
                                                        content_to_send,
                                                        datetime.now(), 
-                                                       f"Failed to send email to {client_email}. Error: {str(email_status)}")
+                                                       f"Failed to send email to {email}. Error: {str(email)}")
                                     st.write("pas envoyé ")
                             except Exception as e:
-                                st.write( f"il y'a problème d'envoie errur : {e}")
-                    
+                                message.create_message( client_email, 
+                                                       content_to_send,
+                                                       datetime.now(), 
+                                                       f"Failed to send email to {email}. Error: {str(e)}")
+                                st.write( f"il y'a problème d'envoie error : {e}")
+
             else:
                 pass
 
