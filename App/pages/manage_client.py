@@ -68,7 +68,11 @@ def run_manage_client(client):
             except IndexError:
                 st.write("autres fichiers")           
             
-        #client = Client(email, username, password, recovery_token=None)
+        if st.button("Insert a new client"):
+           
+           for i, email in enumerate(file_extracted["email"]):
+                client.create_client(email, user_name, password, recovery_token=None)
+                st.write(f"{i} email: {email} ")
 
 if __name__ == "__main__":
     run_manage_client("Manage Client")
