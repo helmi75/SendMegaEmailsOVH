@@ -23,9 +23,9 @@ def run_manage_message(email_sender, messagess, client):
         for messaga in messagess.get_test_message(user):        
             with st.chat_message("user"):
                 active_user = messaga[1]
-                active_content = htmlmin.minify(messaga[7])
-                active_date = messaga[8]
-                status_message = messaga[9]
+                active_content = htmlmin.minify(str(messaga[8]))
+                active_date = messaga[9]
+                status_message = messaga[10]
                 max_page_width = 800
                 css = f"""
                         <style>
