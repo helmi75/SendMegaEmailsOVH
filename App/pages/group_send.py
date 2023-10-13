@@ -39,6 +39,7 @@ def run_group_send(email_sender, client, template, message):
             if selected_option :
                 html_string = df_to_all[df_to_all["template_name"]==selected_option]["template_content"].values[0]
                 st.markdown(html_string, unsafe_allow_html=True)
+            subject = st.text_input("insert subject ")
             if st.button("Send test email", key=4):
                 for list_email in chunked_email_array:
                     for i, email in enumerate(list_email):                                
@@ -48,7 +49,7 @@ def run_group_send(email_sender, client, template, message):
                                 content_to_send = f"<!DOCTYPE html><html><body>{html_string}</body></html>"
 
                                 # try to send email ton client 
-                                email_status = email_sender.send_email(email , "testh_helmi_html", content_to_send)
+                                email_status = email_sender.send_email(email , subject , content_to_send)
                                 print(email_status)
 
                                 if email_status == True:
