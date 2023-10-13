@@ -9,7 +9,8 @@ conn.execute('''CREATE TABLE IF NOT EXISTS client
                  email TEXT UNIQUE,
                  user_name TEXT,
                  password TEXT,
-                 recovery_token TEXT )''')
+                 recovery_token TEXT,
+                 group_name TEXT )''')
 
 # Création de la table "message"
 conn.execute('''CREATE TABLE IF NOT EXISTS message (

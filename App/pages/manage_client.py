@@ -12,10 +12,13 @@ def run_manage_client(client):
                 user_name = st.text_input("Username")
                 password = st.text_input("password")
                 recovery_token = st.text_input("recovery_token")
-                create_button = st.form_submit_button("Create")            
+                group_name = st.text_input("group_name")
+
+                create_button = st.form_submit_button("Create")  
+                        
         if create_button:
             # !! ajouter un test de d'insertion
-                client.create_client(email, user_name, password, recovery_token)
+                client.create_client(email, user_name, password, recovery_token, group_name)
                 st.write("Username created:", user_name)
 
         # deleate client 
@@ -47,7 +50,8 @@ def run_manage_client(client):
                                                                         "email",
                                                                         "user_name",
                                                                         "password",
-                                                                        "recovery_token"]
+                                                                        "recovery_token",
+                                                                        "group_name"]
                                                                         )) 
         
     with tab3:
@@ -58,6 +62,7 @@ def run_manage_client(client):
         if file is not None: 
             file_extracted = pd.read_excel(file)
             st.write(file_extracted.columns[0])
+            group_name = st.text_input("Group Name")
             try :
 
                 if  file_extracted.columns[0] == "email":
@@ -70,9 +75,10 @@ def run_manage_client(client):
             
         if st.button("Insert a new client"):
            
-           for i, email in enumerate(file_extracted["email"]):
-                client.create_client(email, user_name, password, recovery_token=None)
-                st.write(f"{i} email: {email} ")
+           if group_name :
+            for i, email in enumerate(file_extracted["email"]):
+                    client.create_client(email, user_name, password, recovery_token=None, group_name=group_name)
+                    st.write(f"{i} email: {email} ")
 
 if __name__ == "__main__":
     run_manage_client("Manage Client")

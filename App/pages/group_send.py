@@ -43,8 +43,7 @@ def run_group_send(email_sender, client, template, message):
                 for list_email in chunked_email_array:
                     for i, email in enumerate(list_email):                                
                             try:                                
-                                client_email= client.get_id_client(email)[0][0]
-                                
+                                client_email= client.get_id_client(email)[0][0]                           
 
                                 content_to_send = f"<!DOCTYPE html><html><body>{html_string}</body></html>"
 
@@ -76,7 +75,8 @@ def run_group_send(email_sender, client, template, message):
 
     with tab2: # From database
         st.write("### From database ")
-        serie_email_file = pd.DataFrame(client.get_all_clients(), columns=["id_client","email","user_name","password","recovery_token"])
+        serie_email_file = pd.DataFrame(client.get_all_clients(), 
+                                        columns=["id_client","email","user_name","password","recovery_token","group_name"])
         chunker = EmailChunker(chunk_size=298)
         chunked_email_array = chunker.chunk_emails(serie_email_file["email"])  # split the email addresses into chunks
         moy_email = len(chunked_email_array[0])  # calculate the average number of emails per chunk

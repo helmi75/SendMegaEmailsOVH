@@ -5,9 +5,9 @@ from .crm_database import CRMDatabase
 
 class CreateClient(CRMDatabase):
 
-    def create_client(self, email, user_name=None, password=None, recovery_token=None):
-        self.cursor.execute("INSERT INTO client (email, user_name, password, recovery_token) VALUES (?, ?, ?, ?)",
-                            (email, user_name, password, recovery_token))
+    def create_client(self, email, user_name=None, password=None, recovery_token=None, group_name=None):
+        self.cursor.execute("INSERT INTO client (email, user_name, password, recovery_token, group_name) VALUES (?, ?, ?, ?, ?)",
+                            (email, user_name, password, recovery_token, group_name))
         self.conn.commit()
 
     def delete_client(self, id_client):
