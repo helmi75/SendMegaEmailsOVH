@@ -5,7 +5,7 @@ from .crm_database import CRMDatabase
 
 class CreateClient(CRMDatabase):
 
-    def create_client(self, email, user_name, password, recovery_token):
+    def create_client(self, email, user_name=None, password=None, recovery_token=None):
         self.cursor.execute("INSERT INTO client (email, user_name, password, recovery_token) VALUES (?, ?, ?, ?)",
                             (email, user_name, password, recovery_token))
         self.conn.commit()
@@ -17,6 +17,8 @@ class CreateClient(CRMDatabase):
     def get_all_clients(self):
         self.cursor.execute("SELECT * FROM client")
         return self.cursor.fetchall()
+    
+    
     
     def get_id_client(self, email):
         self.cursor.execute("SELECT id_client FROM client WHERE email = ?", (email,)) 
